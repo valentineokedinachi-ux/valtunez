@@ -71,7 +71,7 @@ main{max-width:1320px;margin:auto;padding:0 5%}
 .portrait-ring{position:absolute;inset:-4%;border-radius:50%;border:1px solid var(--line);border-top-color:var(--ch);animation:spin 14s linear infinite}.portrait-ring.r2{inset:-12%;border-style:dashed;border-top-color:var(--bur2);animation-duration:26s;animation-direction:reverse}
 @keyframes spin{to{transform:rotate(360deg)}}
 .portrait-frame{position:relative;width:88%;aspect-ratio:1;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 30% 25%,var(--bur2),var(--bur) 70%);display:grid;place-items:center;box-shadow:0 30px 80px #000a,0 0 0 8px rgba(212,181,122,.08),inset 0 0 0 1px var(--line)}
-.portrait-frame span{font:600 84px var(--serif);color:var(--ch2);letter-spacing:.05em}.portrait-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:top;}
+.portrait-frame span{font:600 84px var(--serif);color:var(--ch2);letter-spacing:.05em}.portrait-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .chip-float{position:absolute;padding:10px 16px;border-radius:99px;font-size:11px;background:rgba(22,22,25,.85);border:1px solid var(--line);backdrop-filter:blur(10px);color:var(--ch2);animation:float 5s ease-in-out infinite alternate}.c1{top:8%;right:-4%}.c2{bottom:10%;left:-6%;animation-delay:-2.5s}
 @keyframes float{to{transform:translateY(-14px)}}
 .marquee{overflow:hidden;border-block:1px solid var(--line);padding:18px 0;margin:30px 0;mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
@@ -161,3 +161,55 @@ input[type=range]{accent-color:var(--ch);height:3px;cursor:pointer}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important;transition-duration:.01s!important}.rv{opacity:1;transform:none}}
 /* phone safe areas (notch / home bar) */
 .nav{padding-top:max(16px,env(safe-area-inset-top))}.player{bottom:max(16px,env(safe-area-inset-bottom))}
+/* phone safe areas (notch / home bar) */
+.nav{padding-top:max(16px,env(safe-area-inset-top))}.player{bottom:max(16px,env(safe-area-inset-bottom))}
+/* portrait: tall arch so rectangular photos are not cut off */
+.portrait{aspect-ratio:4/5;max-width:400px}
+.portrait-frame{width:90%;aspect-ratio:4/5;border-radius:999px 999px 28px 28px}
+.portrait-frame img{object-fit:cover;object-position:center 20%}
+.portrait-ring,.portrait-ring.r2{border-radius:999px 999px 40px 40px;animation:breathe 6s ease-in-out infinite alternate}
+.portrait-ring.r2{animation-delay:-3s}
+@keyframes breathe{from{transform:scale(1);opacity:.9}to{transform:scale(1.035);opacity:.45}}
+@media(max-width:900px){.portrait{max-width:250px}}
+/* ---------- mobile polish ---------- */
+@media(max-width:900px){
+  .nav-links{justify-content:space-between;gap:0;overflow:visible}
+  .nav-links button{flex:1;padding:9px 4px;font-size:11.5px;text-align:center}
+  .brand-name{font-size:17px}
+  .artist{width:104px}.artist-photo{width:104px;height:104px;font-size:28px}
+  .head{margin:44px 0 16px}
+  .player{grid-template-columns:1fr auto;grid-template-areas:"track extra" "center center";gap:6px 10px;padding:10px 14px}
+  .player-track{grid-area:track;padding-right:0}
+  .player-extra{grid-area:extra;position:static}
+  .player-center{grid-area:center}
+  .heart-button{position:static;transform:none;margin-left:6px}
+  .player-cover{width:44px;height:44px}
+  .player-controls{gap:26px}
+  body.has-player{padding-bottom:170px}.toast{bottom:175px}.lyrics-panel{padding-bottom:180px}
+  .about-actions .btn{flex:1;text-align:center}
+}
+/* fix: long titles were forcing the grid wider than the phone screen */
+.track-grid{grid-template-columns:repeat(auto-fill,minmax(min(190px,100%),1fr))}
+.track-card,.mood,.pillar{min-width:0}
+main,.view{min-width:0;max-width:100%}
+@media(max-width:900px){
+  .track-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .moods{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .track-card{padding:10px}
+  .search-form{padding:6px 6px 6px 16px}.search-form button{padding:12px 18px}
+}
+html,body{overflow-x:hidden}
+/* phones have no hover: always show the play button */
+@media(hover:none){.card-play{opacity:1;transform:none;width:40px;height:40px}.track-card:hover{transform:none}}
+
+/* ---------- portrait: fits ANY photo shape, nothing is cut off ---------- */
+.portrait{aspect-ratio:auto;max-width:400px;width:100%;display:block;position:relative;justify-self:center}
+.portrait-ring{display:none}
+.portrait-frame{position:relative;width:100%;aspect-ratio:auto;height:auto;border-radius:28px;display:block;overflow:hidden;
+  background:radial-gradient(circle at 30% 25%,var(--bur2),var(--bur) 70%);
+  box-shadow:0 30px 80px #000a,0 0 0 8px rgba(212,181,122,.08),inset 0 0 0 1px var(--line)}
+.portrait-frame:not(:has(img)){aspect-ratio:4/5;display:grid;place-items:center}
+.portrait-frame span{position:absolute;inset:0;z-index:0;display:grid;place-items:center}
+.portrait-frame img{position:relative;z-index:1;display:block;width:100%;height:auto;object-fit:contain}
+.chip-float{z-index:2}
+@media(max-width:900px){.portrait{max-width:280px}.c1{right:-2%}.c2{left:-2%}}
