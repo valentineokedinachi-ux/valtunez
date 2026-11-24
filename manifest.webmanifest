@@ -1,0 +1,17 @@
+{
+  "name": "VALTUNEZ by Okedinachi Valentine",
+  "short_name": "VALTUNEZ",
+  "description": "Discover music, sing along with lyrics, and keep songs offline.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f0f11",
+  "theme_color": "#0f0f11",
+  "categories": ["music", "entertainment"],
+  "icons": [
+    {"src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "assets/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
